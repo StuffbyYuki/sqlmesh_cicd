@@ -1,0 +1,56 @@
+name: SQLMesh Bot
+run-name: 🚀SQLMesh Bot 🚀
+on:
+  pull_request:
+    types:
+    - synchronize
+    - opened
+  pull_request_review:
+    types:
+    - edited
+    - submitted
+    - dismissed
+  issue_comment:
+    types:
+    - created
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  sqlmesh:
+    name: SQLMesh Actions Workflow
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      checks: write
+      pull-requests: write
+    env:
+      SQLMESH__GATEWAYS__SNOWFLAKE__CONNECTION__TYPE: "snowflake"
+      SQLMESH__GATEWAYS__SNOWFLAKE__CONNECTION__ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+      SQLMESH__GATEWAYS__SNOWFLAKE__CONNECTION__USER: ${{ secrets.SNOWFLAKE_USER }}
+      SQLMESH__GATEWAYS__SNOWFLAKE__CONNECTION__PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+      SQLMESH__GATEWAYS__SNOWFLAKE__CONNECTION__DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
+      SQLMESH__GATEWAYS__SNOWFLAKE__CONNECTION__WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+      SQLMESH__DEFAULT_GATEWAY: "snowflake"
+      SQLMESH__GATEWAYS__SNOWFLAKE__STATE_CONNECTION__TYPE: "postgres"
+      SQLMESH__GATEWAYS__SNOWFLAKE__STATE_CONNECTION__HOST: ${{ secrets.POSTGRES_HOST }}
+      SQLMESH__GATEWAYS__SNOWFLAKE__STATE_CONNECTION__PORT: ${{ secrets.POSTGRES_PORT }}
+      SQLMESH__GATEWAYS__SNOWFLAKE__STATE_CONNECTION__USER: ${{ secrets.POSTGRES_USER }}
+      SQLMESH__GATEWAYS__SNOWFLAKE__STATE_CONNECTION__PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      SQLMESH__GATEWAYS__SNOWFLAKE__STATE_CONNECTION__DATABASE: ${{ secrets.POSTGRES_DATABASE }}
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: refs/pull/${{ github.event.issue.pull_request && github.event.issue.number || github.event.pull_request.number  }}/merge
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+        shell: bash
+      - name: Run CI/CD Bot
+        run: |
+          sqlmesh_cicd -p ${{ github.workspace }} github --token ${{ secrets.GITHUB_TOKEN }} run-all

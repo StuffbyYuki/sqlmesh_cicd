@@ -1,0 +1,33 @@
+default_target_environment: {{ env_var ('LOGGEDIN_USERNAME') }}
+
+gateways:
+  local:
+    connection:
+      type: duckdb
+      database: db.db
+  
+  snowflake:
+    connection:
+      type: snowflake
+      account: temzndf-ffb05789
+      user: SQLMESH
+      password: {{ env_var ('SNOWFLAKE_PASSWORD') }} 
+      database: SQLMESH_EXAMPLE
+      warehouse: COMPUTE_WH
+    state_connection:
+      type: postgres
+      host: ep-still-firefly-a5jpi497.us-east-2.aws.neon.tech
+      port: 5432
+      user: some_db_owner
+      password: {{ env_var ('POSTGRES_NEON_PASSWORD') }}
+      database: sqlmesh_state
+      pre_ping: True
+    test_connection:
+      type: duckdb
+      database: test.db
+
+default_gateway: snowflake
+
+model_defaults:
+  dialect: snowflake
+  start: 2024-12-02
