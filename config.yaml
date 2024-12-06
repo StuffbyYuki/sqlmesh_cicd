@@ -19,7 +19,7 @@ gateways:
       host: ep-still-firefly-a5jpi497.us-east-2.aws.neon.tech
       port: 5432
       user: some_db_owner
-      password: {{ env_var ('POSTGRES_NEON_PASSWORD') }}
+      password: {{ env_var ('POSTGRES_PASSWORD') }}
       database: sqlmesh_state
       pre_ping: True
     test_connection:
