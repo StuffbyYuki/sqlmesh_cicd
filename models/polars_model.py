@@ -6,7 +6,7 @@ import polars as pl
 from sqlmesh import ExecutionContext, model
 
 @model(
-    "python_model.polars_example",
+    "sqlmesh_example.polars_example",
     owner="yuki",
     cron="@daily",
     columns={
