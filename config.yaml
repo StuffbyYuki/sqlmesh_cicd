@@ -31,3 +31,9 @@ default_gateway: snowflake
 model_defaults:
   dialect: snowflake
   start: 2024-12-02
+
+users:
+  - username: yuki
+    github_username: stuffbyyuki
+    roles:
+      - required_approver
