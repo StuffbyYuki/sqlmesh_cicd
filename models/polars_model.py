@@ -13,6 +13,7 @@ from sqlmesh import ExecutionContext, model
         "col_a": "int",
         "col_b": "int",
         "col_c": "boolean",
+        "col_d": "text"
     },
     dialect="duckdb"
 )
@@ -29,7 +30,8 @@ def execute(
     return (
         df
         .with_columns(
-            col_c=pl.col('col_a').eq(1)
+            col_c=pl.col('col_a').eq(1),
+            col_d=pl.lit('column d')
         )
         .to_pandas()
     )
