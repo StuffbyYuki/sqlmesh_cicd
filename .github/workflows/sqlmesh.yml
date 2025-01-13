@@ -5,7 +5,7 @@ on:
     types:
     - synchronize
     - opened
-    - edited
+  #   - edited
   # pull_request_review:
   #   types:
   #   - edited
