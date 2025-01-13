@@ -12,7 +12,8 @@ MODEL (
     id,
     item_id,
     event_date,
-    'a' AS test_col
+    'a' AS test_col,
+    'b' AS test_col2
   FROM
     sqlmesh_example.seed_model
   WHERE
