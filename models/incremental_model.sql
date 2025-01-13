@@ -12,8 +12,11 @@ MODEL (
     id,
     item_id,
     event_date,
+    'a' AS test_col
   FROM
     sqlmesh_example.seed_model
   WHERE
     event_date BETWEEN @start_date AND @end_date
+
+    
   

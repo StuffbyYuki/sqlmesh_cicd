@@ -26,7 +26,7 @@ gateways:
       type: duckdb
       database: test.db
 
-default_gateway: snowflake
+default_gateway: local
 
 model_defaults:
   dialect: snowflake
@@ -35,5 +35,5 @@ model_defaults:
 users:
   - username: yuki
     github_username: stuffbyyuki
-    roles:
-      - required_approver
+    # roles:
+    #   - required_approver
