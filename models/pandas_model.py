@@ -2,7 +2,6 @@ import typing as t
 from datetime import datetime
 
 import pandas as pd
-import polars as pl
 from sqlmesh import ExecutionContext, model
 
 @model(
@@ -11,9 +10,7 @@ from sqlmesh import ExecutionContext, model
     cron="@daily",
     columns={
         "col_a": "int",
-        "col_b": "int",
-        "col_c": "boolean",
-        "col_d": "text"
+        "col_b": "int"
     },
     dialect="duckdb"
 )
@@ -25,13 +22,5 @@ def execute(
     **kwargs: t.Any,
 ) -> pd.DataFrame:
     
-    df = pl.DataFrame({'col_a': [1,2,3], 'col_b': [4,5,6]})
+    return pd.DataFrame({'col_a': [1,2,3], 'col_b': [4,5,6]})
 
-    return (
-        df
-        .with_columns(
-            col_c=pl.col('col_a').eq(1),
-            col_d=pl.lit('column d')
-        )
-        .to_pandas()
-    )
