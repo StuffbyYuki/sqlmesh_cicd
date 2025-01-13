@@ -5,11 +5,12 @@ on:
     types:
     - synchronize
     - opened
-  pull_request_review:
-    types:
     - edited
-    - submitted
-    - dismissed
+  # pull_request_review:
+  #   types:
+  #   - edited
+  #   - submitted
+  #   - dismissed
   # issue_comment:
   #   types:
   #   - created
