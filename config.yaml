@@ -26,14 +26,19 @@ gateways:
       type: duckdb
       database: test.db
 
-default_gateway: snowflake
+default_gateway: local
 
 model_defaults:
   dialect: snowflake
   start: 2024-12-02
 
-users:
-  - username: yuki
-    github_username: stuffbyyuki
-    roles:
-      - required_approver
+# users:
+#   - username: yuki
+#     github_username: stuffbyyuki
+    # roles:
+    #   - required_approver
+
+cicd_bot:
+  type: github
+  merge_method: squash
+  enable_deploy_command: true
