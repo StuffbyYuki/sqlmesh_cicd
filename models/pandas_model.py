@@ -5,7 +5,7 @@ import pandas as pd
 from sqlmesh import ExecutionContext, model
 
 @model(
-    "sqlmesh_example.polars_example",
+    "sqlmesh_example.pandas_example",
     owner="yuki",
     cron="@daily",
     columns={
